@@ -1,0 +1,30 @@
+{
+  "overview": "Sports Edge is a complete, professional sports merchandise e-commerce platform. Shop for Football, Cricket, Basketball, Tennis, and Badminton gear with a seamless shopping experience including cart, wishlist, order tracking, and an admin dashboard for store management.",
+  "features": [
+    "Product catalog with 12+ sports merchandise items across Football, Cricket, Basketball, Tennis, and Badminton",
+    "User authentication with role-based access (customer and admin)",
+    "Shopping cart with quantity management and total calculation",
+    "Wishlist functionality",
+    "Simulated checkout with UPI, Card, and Net Banking payment options",
+    "Order placement and order history with real-time status tracking (Placed > Processing > Shipped > Delivered)",
+    "Review and rating system (1-5 stars per product)",
+    "Admin dashboard with product CRUD, order management, user management, and sales analytics",
+    "Advanced product search and filters by sport, brand, and price range",
+    "Contact page with store address, email, and Instagram details",
+    "About page describing Sports Edge",
+    "Professional dark navy, forest green, and white sports-themed UI with hero banner",
+    "Fully responsive design for desktop, tablet, and mobile"
+  ],
+  "category": "e-commerce",
+  "tags": [
+    "sports",
+    "merchandise",
+    "e-commerce",
+    "shopping",
+    "admin-dashboard",
+    "order-tracking",
+    "cart",
+    "wishlist"
+  ],
+  "last_updated": "2026-04-18T07:00:36.680Z"
+}

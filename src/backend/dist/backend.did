@@ -1,0 +1,233 @@
+type Wishlist = 
+ record {
+   productIds: vec ProductId;
+   userId: UserId;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   email: text;
+   name: text;
+ };
+type UserId = principal;
+type User = 
+ record {
+   addresses: vec text;
+   createdAt: Timestamp;
+   email: text;
+   id: UserId;
+   name: text;
+ };
+type UpdateProductRequest = 
+ record {
+   brand: text;
+   category: Category;
+   description: text;
+   id: ProductId;
+   imageUrl: text;
+   name: text;
+   price: nat;
+   stock: nat;
+ };
+type UpdateCartItemRequest = 
+ record {
+   productId: ProductId;
+   quantity: nat;
+ };
+type TopProduct = 
+ record {
+   productId: ProductId;
+   productName: text;
+   revenue: nat;
+   totalSold: nat;
+ };
+type Timestamp = int;
+type SubmitContactRequest = 
+ record {
+   email: text;
+   message: text;
+   name: text;
+ };
+type ReviewId = nat;
+type Review = 
+ record {
+   comment: text;
+   id: ReviewId;
+   productId: ProductId;
+   rating: nat;
+   timestamp: Timestamp;
+   userId: UserId;
+ };
+type ProductId = nat;
+type Product = 
+ record {
+   brand: text;
+   category: Category;
+   description: text;
+   id: ProductId;
+   imageUrl: text;
+   name: text;
+   price: nat;
+   rating: nat;
+   reviewCount: nat;
+   stock: nat;
+ };
+type PlaceOrderRequest = 
+ record {
+   couponCode: opt text;
+   deliveryAddress: Address;
+   items: vec OrderItem;
+   paymentMethod: PaymentMethod;
+ };
+type PaymentMethod = 
+ variant {
+   Card;
+   NetBanking;
+   UPI;
+ };
+type OrdersByStatus = 
+ record {
+   cancelled: nat;
+   delivered: nat;
+   placed: nat;
+   processing: nat;
+   shipped: nat;
+ };
+type OrderStatus = 
+ variant {
+   Cancelled;
+   Delivered;
+   Placed;
+   Processing;
+   Shipped;
+ };
+type OrderItem = 
+ record {
+   price: nat;
+   productId: ProductId;
+   productName: text;
+   quantity: nat;
+ };
+type OrderId = nat;
+type Order = 
+ record {
+   couponCode: opt text;
+   deliveryAddress: Address;
+   discountAmount: nat;
+   id: OrderId;
+   items: vec OrderItem;
+   paymentMethod: PaymentMethod;
+   status: OrderStatus;
+   timestamp: Timestamp;
+   total: nat;
+   userId: UserId;
+ };
+type MessageId = nat;
+type ContactMessage = 
+ record {
+   email: text;
+   id: MessageId;
+   message: text;
+   name: text;
+   timestamp: Timestamp;
+ };
+type Category = 
+ variant {
+   Badminton;
+   Basketball;
+   Cricket;
+   Football;
+   Tennis;
+ };
+type CartItem = 
+ record {
+   price: nat;
+   productId: ProductId;
+   quantity: nat;
+ };
+type Cart = 
+ record {
+   items: vec CartItem;
+   total: nat;
+   userId: UserId;
+ };
+type AdminStats = 
+ record {
+   monthlyRevenue: nat;
+   ordersByStatus: OrdersByStatus;
+   topProducts: vec TopProduct;
+   totalOrders: nat;
+   totalProducts: nat;
+   totalRevenue: nat;
+   totalUsers: nat;
+ };
+type Address = 
+ record {
+   city: text;
+   fullName: text;
+   phone: text;
+   pincode: text;
+   state: text;
+   street: text;
+ };
+type AddToCartRequest = 
+ record {
+   productId: ProductId;
+   quantity: nat;
+ };
+type AddReviewRequest = 
+ record {
+   comment: text;
+   productId: ProductId;
+   rating: nat;
+ };
+type AddProductRequest = 
+ record {
+   brand: text;
+   category: Category;
+   description: text;
+   imageUrl: text;
+   name: text;
+   price: nat;
+   stock: nat;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  addProduct: (req: AddProductRequest) -> (Product);
+  addReview: (req: AddReviewRequest) -> (Review);
+  addToCart: (req: AddToCartRequest) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  clearCart: () -> ();
+  deleteProduct: (id: ProductId) -> (bool);
+  filterProducts: (category: opt Category, brand: opt text, minPrice:
+   opt nat, maxPrice: opt nat) -> (vec Product) query;
+  getAdminStats: () -> (AdminStats) query;
+  getAllOrders: () -> (vec Order) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCart: () -> (Cart) query;
+  getMyOrders: () -> (vec Order) query;
+  getOrder: (orderId: OrderId) -> (opt Order) query;
+  getProduct: (id: ProductId) -> (opt Product) query;
+  getProductReviews: (productId: ProductId) -> (vec Review) query;
+  getUserProfile: (user: UserId) -> (opt UserProfile) query;
+  getWishlist: () -> (Wishlist) query;
+  isCallerAdmin: () -> (bool) query;
+  listContactMessages: () -> (vec ContactMessage) query;
+  listProducts: (category: opt Category) -> (vec Product) query;
+  listUsers: () -> (vec User) query;
+  placeOrder: (req: PlaceOrderRequest) -> (Order);
+  removeFromCart: (productId: ProductId) -> ();
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  searchProducts: (term: text) -> (vec Product) query;
+  submitContactMessage: (req: SubmitContactRequest) -> (ContactMessage);
+  toggleWishlist: (productId: ProductId) -> (bool);
+  updateCartItem: (req: UpdateCartItemRequest) -> ();
+  updateOrderStatus: (orderId: OrderId, status: OrderStatus) -> (bool);
+  updateProduct: (req: UpdateProductRequest) -> (bool);
+}
